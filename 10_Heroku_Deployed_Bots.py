@@ -1,0 +1,79 @@
+
+# coding: utf-8
+
+# In[ ]:
+
+
+from set_tweepy_context import api
+
+# Dependencies
+import tweepy
+import json
+import time
+# print(json.dumps(homer, sort_keys=True, indent=4, separators=(',', ': ')))
+
+
+# In[ ]:
+
+
+# Delete the last twenty entries.
+def gosher():
+    list_status = api.home_timeline()
+
+    for status_entry in list_status:
+        status_id = status_entry.get('id')
+        status_text = status_entry.get('text')
+        if status_text.startswith("Can't stop."):
+            try:
+                api.destroy_status(status_id)   
+#                 print("Destroyed", status_text)
+            except:
+#                 print("Could not destroy", status_text)
+                pass  
+
+
+# In[ ]:
+
+
+# Create a function that tweets
+def TweetOut(tweet_number):
+    
+    tweet_str = "Can't stop. Won't stop. Chatting! This is Tweet {}.".format(tweet_number)
+        
+    try:
+        api.update_status(tweet_str)
+#         print("Added", str(tweet_number))
+
+    except tweepy.TweepError as e:
+        for arg in e.args:
+#             print(arg[0].get('message'))
+            if arg[0].get('message') == "Status is a duplicate.":
+#                 print("Calling gosher")
+                gosher()
+                time.sleep(5)
+                TweetOut(tweet_number)
+
+    
+    
+
+
+# In[ ]:
+
+
+# Infinitely loop
+# while(counter < 10):
+# Create a function that calls the TweetOut function every minute
+counter = 0
+
+while(counter < 100):
+
+    # Call the TweetQuotes function and specify the tweet number
+    TweetOut(counter)
+
+    # Once tweeted, wait 60 seconds before doing anything else
+    time.sleep(60)
+
+    # Add 1 to the counter prior to re-running the loop
+    counter += 1
+#     print(counter)
+

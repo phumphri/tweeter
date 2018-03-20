@@ -1,0 +1,1 @@
+worker: python 10_Heroku_Deployed_Bots.py
