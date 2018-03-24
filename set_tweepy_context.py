@@ -1,6 +1,7 @@
 # Set dependancies
 import tweepy
 import json
+import os
 
 # Set Twitter credentials.
 
