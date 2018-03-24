@@ -3,15 +3,15 @@ import tweepy
 import json
 
 # Set Twitter credentials.
-consumer_key="YhICRiL9rXjMj5gC74v8Bi7Wa"
-consumer_secret="RhPW6tVd7j8GC6wP9byWE7hdvAxmo6s15H6LappofOm5iByF7U"
 
-access_token="973957423152095232-BlngqUDT7UhLsl3I6mSW9YXNkL5401H"
-access_token_secret="b20uzJQa76vxhzdzmdv6QVVH1Dt7BDT5BezJiKDkgoxWO"
+consumer_key = os.environ['consumer_key']
+consumer_secret = os.environ['consumer_secret']
+access_token = os.environ['access_token']
+access_token_secret = os.environ['access_token_secret']
 
 # Set Authentication Handler
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_token_secret)
+auth.access_token_secret(access_token, access_token_secret)
 
 # The original version from YouTube.
 # Returned is an object with methods.

@@ -65,7 +65,7 @@ def TweetOut(tweet_number):
 # Create a function that calls the TweetOut function every minute
 counter = 0
 
-while(counter < 100):
+while(True):
 
     # Call the TweetQuotes function and specify the tweet number
     TweetOut(counter)
