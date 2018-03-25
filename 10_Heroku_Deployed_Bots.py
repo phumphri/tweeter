@@ -4,6 +4,7 @@
 # In[ ]:
 
 
+# Obtaining credentials.
 from set_tweepy_context import api
 
 # Dependencies
@@ -16,7 +17,7 @@ import time
 # In[ ]:
 
 
-# Delete the last twenty entries.
+# Delete the last twenty entries to avoid duplicate status messages.
 def gosher():
     list_status = api.home_timeline()
 
@@ -26,9 +27,8 @@ def gosher():
         if status_text.startswith("Can't stop."):
             try:
                 api.destroy_status(status_id)   
-#                 print("Destroyed", status_text)
             except:
-#                 print("Could not destroy", status_text)
+                print("Could not destroy", status_text)
                 pass  
 
 
@@ -46,14 +46,10 @@ def TweetOut(tweet_number):
 
     except tweepy.TweepError as e:
         for arg in e.args:
-#             print(arg[0].get('message'))
             if arg[0].get('message') == "Status is a duplicate.":
-#                 print("Calling gosher")
                 gosher()
                 time.sleep(5)
                 TweetOut(tweet_number)
-
-    
     
 
 
@@ -75,5 +71,4 @@ while(True):
 
     # Add 1 to the counter prior to re-running the loop
     counter += 1
-#     print(counter)
 
